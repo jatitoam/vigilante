@@ -29,6 +29,10 @@ Para poder configurar tu entorno de desarrollo debes hacer lo siguiente:
 
 El entorno de desarrollo trae una base de datos DynamoDB que se instala por medio de Docker. Para poder acceder a la misma puedes hacerlo por medio de tu navegador utilizando [http://localhost:8001](http://localhost:8001). Considera que el puerto 8001 puede cambiar dependiendo de tu archivo `.env`.
 
+### Acceso al backend (API)
+
+El backend está accesible a través del puerto 8080 (o según lo hayas configurado en tu archivo `.env`). De esta forma puedes acceder a través de [http://localhost:8080](http://localhost:8080) a los distintos métodos programados.
+
 ## Contribución
 
 ¡Se aceptan contribuciones! Si deseas contribuir a Vigilante, por favor sigue los siguientes pasos:
