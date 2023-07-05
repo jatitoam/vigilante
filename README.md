@@ -13,6 +13,14 @@ Vigilante es un software de código abierto diseñado para brindar apoyo a parti
 - Backend: Typescript / DynamoDB
 - Frontend: Vue.js / Typescript
 
+# Configuración para desarrollo
+
+Este repositorio trae incorporado un Docker Compose para facilitar que nuevos programadores se incorporen al proyecto. Para poder configurar tu entorno de desarrollo debes hacer lo siguiente:
+
+1. Instalar [Docker Desktop](https://docs.docker.com/engine/install/).
+2. Renombrar el archivo `.env.dist` como `.env` y configurar las variables propias de tu entorno como puertos y usuarios (si estás en sistema Mac o Windows, USER_ID=0 y GROUP_ID=0 funcionan bien; si estás en Linux seguro sabes qué hacer).
+3. Arrancar el entorno con `docker compose up -d --build`.
+
 ## Contribución
 
 ¡Se aceptan contribuciones! Si deseas contribuir a Vigilante, por favor sigue los siguientes pasos:

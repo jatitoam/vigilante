@@ -1,0 +1,42 @@
+services:
+  dynamodb:
+    container_name: dynamodb
+    image: amazon/dynamodb-local:latest
+    restart: always
+    ports:
+      - protocol: tcp
+        published: ${DYNAMODB_PORT:-8000}
+        target: 8000
+    volumes:
+      - type: volume
+        source: dynamodb
+        target: /home/dynamodblocal/data
+    command: [ '-jar', 'DynamoDBLocal.jar', '-dbPath', '/home/dynamodblocal/data', '-sharedDb' ]
+    user: "${USER_ID:-0}:${GROUP_ID:-0}"
+    networks:
+      - backend
+
+  dynamodb-admin:
+    container_name: dynamodb-admin
+    build:
+      context: ./docker/dynamodb-admin
+    restart: always
+    ports:
+      - protocol: tcp
+        published: ${DYNAMODB_ADMIN_PORT:-8001}
+        target: 8001
+    networks:
+      - backend
+      - frontend
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+    command: [ 'dynamodb-admin' ]
+
+volumes:
+  dynamodb: {}
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
