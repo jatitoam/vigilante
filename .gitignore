@@ -37,8 +37,17 @@ node_modules
 releases
 vendor
 
+# Dist
+/backend/dist/**
+
 # Specific env
 .env
+
+# Node env
+/backend/.env.local
+!/backend/.env
+/frontend/.env.local
+!/frontend/.env
 
 # Never ignore
 !.gitkeep

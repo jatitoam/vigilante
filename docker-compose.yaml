@@ -1,4 +1,22 @@
 services:
+  backend:
+    container_name: backend
+    image: node:18-alpine
+    restart: always
+    ports:
+      - protocol: tcp
+        published: ${BACKEND_PORT:-8080}
+        target: 3000
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /app/dist
+    working_dir: /app
+    command: [ 'node index' ]
+    user: "${USER_ID:-0}:${GROUP_ID:-0}"
+    networks:
+      - backend
+
   dynamodb:
     container_name: dynamodb
     image: amazon/dynamodb-local:latest

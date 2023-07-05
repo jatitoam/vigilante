@@ -1,0 +1,24 @@
+{
+  "include": ["*.ts", "lib/**/*.ts"],
+  "exclude": [
+      "node_modules",
+      "!node_modules/@types",
+      "./dist"
+  ],
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "inlineSourceMap": true,
+    "moduleResolution": "node",
+    "pretty": true,
+    "typeRoots": [
+        "./node_modules/@types",
+        "lib/Types"
+    ]
+  }
+}
