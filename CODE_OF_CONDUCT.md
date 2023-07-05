@@ -20,7 +20,7 @@ Se espera que todos los participantes en el proyecto Vigilante cumplan con las s
 
 Si presencias o experimentas cualquier comportamiento que consideres inapropiado o en violación del código de conducta, te alentamos a informarlo de inmediato. Puedes hacerlo contactando a los siguientes responsables:
 
-- Nombre del responsable: [enlace al perfil de GitHub](https://github.com/jatitoam)
+- Nombre del responsable: [@jatitoam](https://github.com/jatitoam)
 
 Todas las quejas serán tratadas de manera confidencial y se investigarán adecuadamente. Nos comprometemos a tomar las medidas necesarias para abordar cualquier violación del código de conducta y aplicar las sanciones correspondientes, que pueden incluir advertencias, suspensión o expulsión de la comunidad.
 
