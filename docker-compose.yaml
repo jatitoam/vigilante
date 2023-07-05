@@ -10,9 +10,9 @@ services:
     volumes:
       - type: bind
         source: ./backend
-        target: /app/dist
+        target: /app
     working_dir: /app
-    command: [ 'node index' ]
+    command: [ 'npm', 'start' ]
     user: "${USER_ID:-0}:${GROUP_ID:-0}"
     networks:
       - backend
