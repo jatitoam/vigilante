@@ -33,6 +33,8 @@ El entorno de desarrollo trae una base de datos DynamoDB que se instala por medi
 
 El backend está accesible a través del puerto 8080 (o según lo hayas configurado en tu archivo `.env`). De esta forma puedes acceder a través de [http://localhost:8080](http://localhost:8080) a los distintos métodos programados.
 
+Una documentación de todas las APIs está disponible en [https://app.swaggerhub.com/apis/jatitoam/vigilante/1.0.0](https://app.swaggerhub.com/apis/jatitoam/vigilante/1.0.0).
+
 ## Contribución
 
 ¡Se aceptan contribuciones! Si deseas contribuir a Vigilante, por favor sigue los siguientes pasos:
