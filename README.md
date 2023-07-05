@@ -21,7 +21,11 @@ Vigilante es un software de código abierto diseñado para brindar apoyo a parti
 2. Crea una rama con un nombre descriptivo: `git checkout -b mi-nueva-funcionalidad`
 3. Realiza tus cambios y realiza los commits: `git commit -am 'Agrega una nueva funcionalidad'`
 4. Envía tus cambios al repositorio remoto: `git push origin mi-nueva-funcionalidad`
-5. Envía una solicitud de extracción detallando tus cambios.
+5. Envía un Pull Request a la rama `develop` detallando tus cambios.
+
+## Código de Conducta
+
+Por favor, lee nuestro [Código de Conducta](CODE_OF_CONDUCT.md) para conocer las normas de comportamiento esperadas en este proyecto. Nos esforzamos por mantener un entorno colaborativo, respetuoso y acogedor para todos los participantes.
 
 ## Licencia
 
