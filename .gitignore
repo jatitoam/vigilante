@@ -36,6 +36,7 @@ gulp-config.json
 node_modules
 releases
 vendor
+/npm/**
 
 # Dist
 /backend/dist/**

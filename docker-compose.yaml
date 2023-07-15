@@ -1,4 +1,25 @@
 services:
+  frontend:
+    container_name: frontend
+    image: node:18-alpine
+    restart: always
+    ports:
+      - protocol: tcp
+        published: ${FRONTEND_PORT:-80}
+        target: 5173
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+    working_dir: /app
+    command: [ 'npm', 'run', 'dev' ]
+    user: "${USER_ID:-0}:${GROUP_ID:-0}"
+    depends_on:
+      frontend-npm:
+        condition: service_completed_successfully
+    networks:
+      - frontend
+
   backend:
     container_name: backend
     image: node:18-alpine
@@ -14,6 +35,9 @@ services:
     working_dir: /app
     command: [ 'npm', 'start' ]
     user: "${USER_ID:-0}:${GROUP_ID:-0}"
+    depends_on:
+      backend-npm:
+        condition: service_completed_successfully
     networks:
       - backend
 
@@ -49,6 +73,30 @@ services:
     environment:
       - DYNAMO_ENDPOINT=http://dynamodb:8000
     command: [ 'dynamodb-admin' ]
+
+  backend-npm:
+    image: node:18-alpine
+    container_name: backend-npm
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /app
+    working_dir: /app
+    restart: "no"
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    command: [ 'npm', 'i' ]
+
+  frontend-npm:
+    image: node:18-alpine
+    container_name: frontend-npm
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+    working_dir: /app
+    restart: "no"
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    command: [ 'npm', 'i' ]
 
 volumes:
   dynamodb: {}
