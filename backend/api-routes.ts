@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as fs from "fs";
+import { DepartamentController } from "./lib/Controllers/DepartamentoController";
 
 const router: Router = Router();
 
@@ -35,5 +36,9 @@ router.get("/health", function (req, res) {
     }
   });
 });
+
+// Departamentos routes
+router.route("/departamentos").get(DepartamentController.getList);
+router.route("/departamentos/:id").get(DepartamentController.getItem);
 
 module.exports = router;
