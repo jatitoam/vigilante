@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as fs from "fs";
 import { DepartamentController } from "./lib/Controllers/DepartamentoController";
+import { MunicipioController } from "./lib/Controllers/MunicipioController";
 
 const router: Router = Router();
 
@@ -40,5 +41,9 @@ router.get("/health", function (req, res) {
 // Departamentos routes
 router.route("/departamentos").get(DepartamentController.getList);
 router.route("/departamentos/:id").get(DepartamentController.getItem);
+
+// Municipio Routes
+router.route("/municipio").get(MunicipioController.getList);
+router.route("/municipio/:id").get(MunicipioController.getItem);
 
 module.exports = router;
