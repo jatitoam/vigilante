@@ -1,6 +1,6 @@
-export interface Municipio {
+export interface Centros {
     uuid: String;
     nombre: String;
     codigo: string;
-    departamento_uuid: String
+    municipio_uuid: String
 }

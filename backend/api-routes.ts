@@ -1,7 +1,8 @@
 import { Router } from "express";
 import * as fs from "fs";
-import { DepartamentController } from "./lib/Controllers/DepartamentoController";
-import { MunicipioController } from "./lib/Controllers/MunicipioController";
+import { DepartamentosController } from "./lib/Controllers/DepartamentosController";
+import { MunicipiosController } from "./lib/Controllers/MunicipiosController";
+import { FiscalesController } from "./lib/Controllers/FiscalesController";
 
 const router: Router = Router();
 
@@ -39,11 +40,15 @@ router.get("/health", function (req, res) {
 });
 
 // Departamentos routes
-router.route("/departamentos").get(DepartamentController.getList);
-router.route("/departamentos/:id").get(DepartamentController.getItem);
+router.route("/departamentos").get(DepartamentosController.getList);
+router.route("/departamentos/:id").get(DepartamentosController.getItem);
 
 // Municipio Routes
-router.route("/municipio").get(MunicipioController.getList);
-router.route("/municipio/:id").get(MunicipioController.getItem);
+router.route("/municipios").get(MunicipiosController.getList);
+router.route("/municipios/:id").get(MunicipiosController.getItem);
+
+// Fiscales Routes
+router.route("/fiscales/:id").get(FiscalesController.getByUserUuid);
+
 
 module.exports = router;
