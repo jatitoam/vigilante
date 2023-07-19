@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Vigilante
+  description: |
+    Software abierto para fiscalizar elecciones. Conteo de votos, anotaciones y registro de impugnaciones a nivel distrito, municipio, centro y mesa. Promoviendo transparencia y participación ciudadana en procesos electorales.
+  license:
+    name: GPL 3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html#license-text
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/jatitoam/vigilante/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: health
+  description: Health Status
+paths:
+  /health:
+    get:
+      tags:
+      - health
+      summary: Display the health status of the project
+      operationId: health
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Health'
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        health:
+          type: string
+        projectName:
+          type: string
+        projectVersion:
+          type: string
