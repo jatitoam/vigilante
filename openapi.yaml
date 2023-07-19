@@ -29,6 +29,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Health'
+  /fiscales/{usuario_uuid}:
+    get:
+      parameters:
+        - name: usuario_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+      - fiscales
+      summary: Despliega la información asignada al fiscal
+      operationId: fiscales
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fiscal'
 components:
   schemas:
     Health:
@@ -40,3 +61,17 @@ components:
           type: string
         projectVersion:
           type: string
+    Fiscal:
+      type: array
+      items:
+        type: object
+        properties:
+          tipo:
+            type: string
+          nombre:
+            type: string
+          codigo:
+            type: string
+     
+    
+    
