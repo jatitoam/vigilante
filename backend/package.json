@@ -28,7 +28,8 @@
     "body-parser": "^1",
     "dotenv": "^16",
     "dynamoose": "^3",
-    "express": "^4"
+    "express": "^4",
+    "jsonwebtoken": "^9.0.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1",

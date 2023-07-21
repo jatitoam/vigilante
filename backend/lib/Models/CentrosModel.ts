@@ -3,7 +3,7 @@ import { centrosSchema } from "../Schemas/CentrosSchema";
 
 // Export Centro model
 const CentrosModel = dynamoose.model(
-  "centro",
+  "centros",
   new dynamoose.Schema(centrosSchema())
 );
 

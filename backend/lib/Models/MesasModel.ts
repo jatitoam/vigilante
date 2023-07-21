@@ -3,7 +3,7 @@ import { mesasSchema } from "../Schemas/MesasSchema";
 
 // Export Centro model
 const MesasModel = dynamoose.model(
-  "mesa",
+  "mesas",
   new dynamoose.Schema(mesasSchema())
 );
 
