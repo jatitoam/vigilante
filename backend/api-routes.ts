@@ -4,6 +4,7 @@ import { DepartamentosController } from "./lib/Controllers/DepartamentosControll
 import { MunicipiosController } from "./lib/Controllers/MunicipiosController";
 import { FiscalesController } from "./lib/Controllers/FiscalesController";
 import { LoginController } from "./lib/Controllers/LoginController";
+import { PartidosController } from "./lib/Controllers/PartidosController";
 
 const router: Router = Router();
 
@@ -50,6 +51,9 @@ router.route("/municipios/:id").get(MunicipiosController.getItem);
 
 // Fiscales Routes
 router.route("/fiscales").get(FiscalesController.getByUserUuid);
+
+// Partidos Routes
+router.route("/partidos").get(PartidosController.getList);
 
 // Login route
 router.route("/login").post(LoginController.login)
