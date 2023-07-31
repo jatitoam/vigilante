@@ -29,14 +29,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Health'
-  /fiscales/{usuario_uuid}:
+  /login:
+    post:
+      tags:
+      - login
+      summary: Retorna el token si las credenciales son validas
+      operationId: login
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Login'
+  /fiscales:
     get:
-      parameters:
-        - name: usuario_uuid
-          in: path
-          required: true
-          schema:
-            type: string
       tags:
       - fiscales
       summary: Despliega la información asignada al fiscal
@@ -60,6 +69,11 @@ components:
         projectName:
           type: string
         projectVersion:
+          type: string
+    Login:
+      type: object
+      properties:
+        token:
           type: string
     Fiscal:
       type: array
