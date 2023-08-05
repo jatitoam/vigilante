@@ -7,22 +7,14 @@ info:
     name: GPL 3.0
     url: https://www.gnu.org/licenses/gpl-3.0.en.html#license-text
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/jatitoam/vigilante/1.0.0
-  description: SwaggerHub API Auto Mocking
-tags:
-- name: health
-  description: Health Status
 paths:
   /health:
     get:
-      tags:
-      - health
       summary: Display the health status of the project
       operationId: health
       responses:
         "200":
-          description: successful operation
+          description: Operación exitosa
           content:
             application/json:
               schema:
@@ -31,13 +23,20 @@ paths:
                   $ref: '#/components/schemas/Health'
   /login:
     post:
-      tags:
-      - login
       summary: Retorna el token si las credenciales son validas
-      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
       responses:
         "200":
-          description: successful operation
+          description: Operación exitosa
           content:
             application/json:
               schema:
@@ -46,20 +45,70 @@ paths:
                   $ref: '#/components/schemas/Login'
   /fiscales:
     get:
-      tags:
-      - fiscales
-      summary: Despliega la información asignada al fiscal
-      operationId: fiscales
+      summary: Despliega las fiscalías disponibles del usuario ingresado en su JWT
+      security:
+        - bearerAuth: []
       responses:
         "200":
-          description: successful operation
+          description: Operación exitosa
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Fiscal'
+  /partidos:
+    get:
+      summary: Despliega los partidos disponibles
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Partido'
+  /recuentos:
+    put:
+      summary: Actualiza el recuento de votos de una mesa, centro, municipio o departamento
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tipo:
+                  type: string
+                  enum: [mesa, centro, municipio, departamento]
+                uuid:
+                  type: string
+                  format: uuid
+                partidos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      partido_uuid:
+                        type: string
+                        format: uuid
+                      votos:
+                        type: integer
+      responses:
+        "201":
+          description: Operación exitosa
+        "404":
+          description: No se encontró la mesa, centro, municipio o departamento
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Health:
       type: object
@@ -75,17 +124,29 @@ components:
       properties:
         token:
           type: string
+          format: JWT
     Fiscal:
       type: array
       items:
         type: object
         properties:
+          uuid:
+            type: string
+            format: uuid
           tipo:
             type: string
+            enum: [mesa, centro, municipio, departamento]
           nombre:
             type: string
           codigo:
             type: string
-     
-    
-    
+    Partido:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        color:
+          type: string

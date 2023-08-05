@@ -44,6 +44,9 @@ vendor
 # Specific env
 .env
 
+# Demo data
+/data
+
 # Node env
 /backend/.env.local
 !/backend/.env

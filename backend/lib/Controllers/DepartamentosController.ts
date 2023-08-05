@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DepartamentosModel } from "../Models/DepartamentosModel";
 import { BaseController } from "./BaseController";
 
-export abstract class DepartamentosController extends BaseController {   
+export abstract class DepartamentosController extends BaseController {
   private constructor() {
     super();
   }
@@ -19,13 +19,15 @@ export abstract class DepartamentosController extends BaseController {
   }
 
   /**
-    * Returns the departments, for express
-    * 
-    * @param req
-    * @param res 
-    */
+   * Returns the departments, for express
+   *
+   * @param req
+   * @param res
+   */
   public static async getItem(req: Request, res: Response) {
-    const item = await DepartamentosModel.query("uuid").eq(req.params.id).exec();
+    const item = await DepartamentosModel.query("uuid")
+      .eq(req.params.id)
+      .exec();
     res.status(200).json(item).end();
   }
 }
