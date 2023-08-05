@@ -29,9 +29,10 @@ export abstract class LoginController extends BaseController {
     if (username === data.usuario && password === data.contraseña) {
       const usuario = data.usuario;
       const uuid = data.uuid;
-      const jwtKey = process.env.JWTKEY;
+      const jwtKey = process.env.JWT_KEY || "secret";
+      const jwtExpiration = process.env.JWT_EXPIRATION || "24h";
       const token = jwt.sign({ usuario, uuid }, jwtKey, {
-        expiresIn: "1h",
+        expiresIn: jwtExpiration,
       });
       res.json({ token });
     } else {
