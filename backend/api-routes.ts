@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { DepartamentosController } from "./lib/Controllers/DepartamentosController";
 import { MunicipiosController } from "./lib/Controllers/MunicipiosController";
 import { FiscalesController } from "./lib/Controllers/FiscalesController";
-import { LoginController } from "./lib/Controllers/LoginController";
+import { LoginController } from "./lib/Controllers/UsuariosController";
 import { PartidosController } from "./lib/Controllers/PartidosController";
 import { RecuentosController } from "./lib/Controllers/RecuentosController";
 
@@ -56,11 +56,10 @@ router.route("/fiscales").get(FiscalesController.getByUserUuid);
 // Partidos Routes
 router.route("/partidos").get(PartidosController.getList);
 
-
 // Recuentos Routes
 router.route("/recuentos").put(RecuentosController.updateRecuento);
 
 // Login route
-router.route("/login").post(LoginController.login)
+router.route("/login").post(LoginController.login);
 
 module.exports = router;

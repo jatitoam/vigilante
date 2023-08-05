@@ -3,8 +3,9 @@ import { BaseController } from "./BaseController";
 import { UsuariosModel } from "../Models/UsuariosModel";
 const jwt = require("jsonwebtoken");
 
+const jwtKey = process.env.JWTKEY;
 
-export abstract class LoginController extends BaseController {   
+export abstract class LoginController extends BaseController {
   private constructor() {
     super();
   }
@@ -18,16 +19,24 @@ export abstract class LoginController extends BaseController {
   public static async login(req: Request, res: Response) {
     const { username, password } = req.body;
 
+    // Return 406 if no username or password provided
+    if (!username || !password) {
+      res.status(406).json({ error: "Credenciales inválidas" });
+      return;
+    }
+
     const item = await UsuariosModel.scan("usuario").eq(username).exec();
     const data = item.toJSON()[0];
 
     if (username === data.usuario && password === data.contraseña) {
-        let usuario = data.usuario;
-        let uuid = data.uuid;
-        const token = jwt.sign({ usuario, uuid}, 'secretkeyappearshere', { expiresIn: '1h' });
-        res.json({ token });
+      let usuario = data.usuario;
+      let uuid = data.uuid;
+      const token = jwt.sign({ usuario, uuid }, jwtKey, {
+        expiresIn: "1h",
+      });
+      res.json({ token });
     } else {
-        res.status(401).json({ error: 'Credenciales inválidas' });
+      res.status(401).json({ error: "Credenciales inválidas" });
     }
   }
 }

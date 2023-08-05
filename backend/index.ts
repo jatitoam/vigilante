@@ -12,7 +12,7 @@ const port: String = process.env.PORT || "3000";
 const webFolder: String = process.env.WEBFOLDER || "";
 const dynamoDBConfig: String = process.env.DYNAMODB_CONFIG || "local";
 const dynamoDBLocalEndpoint: String =
-  process.env.DYNAMODB_LOCAL_ENDPOINT || "http://db:8000";
+  process.env.DYNAMODB_LOCAL_ENDPOINT || "http://dynamodb:8000";
 const dynamoDBAWSAccessKeyId: String =
   process.env.DYNAMODB_AWS_ACCESSKEYID || "";
 const dynamoDBAWSSecretAccessKey: String =
@@ -28,7 +28,7 @@ switch (dynamoDBConfig) {
         secretAccessKey: dynamoDBAWSSecretAccessKey.toString(),
       },
       region: dynamoDBAWSRegion.toString(),
-      endpoint: dynamoDBLocalEndpoint.toString()
+      endpoint: dynamoDBLocalEndpoint.toString(),
     });
     dynamoose.aws.ddb.set(dbLocal);
     break;
