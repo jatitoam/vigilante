@@ -3,8 +3,6 @@ import { BaseController } from "./BaseController";
 import { UsuariosModel } from "../Models/UsuariosModel";
 const jwt = require("jsonwebtoken");
 
-const jwtKey = process.env.JWTKEY;
-
 export abstract class LoginController extends BaseController {
   private constructor() {
     super();
@@ -29,8 +27,9 @@ export abstract class LoginController extends BaseController {
     const data = item.toJSON()[0];
 
     if (username === data.usuario && password === data.contraseña) {
-      let usuario = data.usuario;
-      let uuid = data.uuid;
+      const usuario = data.usuario;
+      const uuid = data.uuid;
+      const jwtKey = process.env.JWTKEY;
       const token = jwt.sign({ usuario, uuid }, jwtKey, {
         expiresIn: "1h",
       });
