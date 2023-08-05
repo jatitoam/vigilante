@@ -35,6 +35,16 @@ paths:
       - login
       summary: Retorna el token si las credenciales son validas
       operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
       responses:
         "200":
           description: successful operation
@@ -86,6 +96,3 @@ components:
             type: string
           codigo:
             type: string
-     
-    
-    
