@@ -44,8 +44,6 @@ export abstract class FiscalesController extends BaseController {
       const centros = await CentrosModel.scan().exec();
       const mesas = await MesasModel.scan().exec();
 
-      console.log(mesas)
-
       let fiscales: any[] = Array();
       
       departamentos.forEach(element => {
