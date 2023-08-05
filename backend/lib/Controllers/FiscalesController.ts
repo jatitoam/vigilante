@@ -6,10 +6,6 @@ import { CentrosModel } from "../Models/CentrosModel";
 import { MesasModel } from "../Models/MesasModel";
 
 export abstract class FiscalesController extends BaseController {
-  private constructor() {
-    super();
-  }
-
   /**
    * Returns the Mesas, for express
    *
@@ -18,7 +14,7 @@ export abstract class FiscalesController extends BaseController {
    */
   public static async getFromUser(req: Request, res: Response) {
     if (typeof req.usuario === "undefined" || req.usuario === null) {
-      res.status(500);
+      return res.status(500);
     }
 
     const departamentos = await DepartamentosModel.scan().exec();
@@ -91,6 +87,6 @@ export abstract class FiscalesController extends BaseController {
       });
     });
 
-    res.status(200).json(fiscales).end();
+    return res.status(200).json(fiscales).end();
   }
 }

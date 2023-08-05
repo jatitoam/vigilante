@@ -53,7 +53,6 @@ export abstract class UsuariosController extends BaseController {
     }
 
     jwt.verify(token, jwtKey, (err: any, decoded: any) => {
-      console.log(err);
       if (err) {
         return res.status(403).json({ error: "Token inválido" });
       }
