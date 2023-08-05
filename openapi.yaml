@@ -7,17 +7,9 @@ info:
     name: GPL 3.0
     url: https://www.gnu.org/licenses/gpl-3.0.en.html#license-text
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/jatitoam/vigilante/1.0.0
-  description: SwaggerHub API Auto Mocking
-tags:
-- name: health
-  description: Health Status
 paths:
   /health:
     get:
-      tags:
-      - health
       summary: Display the health status of the project
       operationId: health
       responses:
@@ -31,10 +23,7 @@ paths:
                   $ref: '#/components/schemas/Health'
   /login:
     post:
-      tags:
-      - login
       summary: Retorna el token si las credenciales son validas
-      operationId: login
       requestBody:
         content:
           application/json:
@@ -56,10 +45,9 @@ paths:
                   $ref: '#/components/schemas/Login'
   /fiscales:
     get:
-      tags:
-      - fiscales
-      summary: Despliega la información asignada al fiscal
-      operationId: fiscales
+      summary: Despliega las fiscalías disponibles del usuario ingresado en su JWT
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: successful operation
@@ -70,6 +58,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Fiscal'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Health:
       type: object

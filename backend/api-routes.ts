@@ -51,7 +51,7 @@ router.route("/municipios").get(MunicipiosController.getList);
 router.route("/municipios/:id").get(MunicipiosController.getItem);
 
 // Fiscales Routes
-router.route("/fiscales").get(FiscalesController.getByUserUuid);
+router.route("/fiscales").get(FiscalesController.getFromJWT);
 
 // Partidos Routes
 router.route("/partidos").get(PartidosController.getList);
