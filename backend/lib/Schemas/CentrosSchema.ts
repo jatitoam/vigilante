@@ -1,4 +1,5 @@
 import { fiscalesSchema } from "./FiscalesSchema";
+import { notasSchema } from "./NotasSchema";
 import { recuentosSchema } from "./RecuentosSchema";
 
 export function centrosSchema() {
@@ -10,10 +11,17 @@ export function centrosSchema() {
     fiscales: {
       type: Array,
       schema: [{ type: Object, schema: fiscalesSchema() }],
+      required: true,
     },
     recuentos: {
       type: Array,
       schema: [{ type: Object, schema: recuentosSchema() }],
+      required: true,
+    },
+    notas: {
+      type: Array,
+      schema: [{ type: Object, schema: notasSchema() }],
+      required: true,
     },
   };
 }
