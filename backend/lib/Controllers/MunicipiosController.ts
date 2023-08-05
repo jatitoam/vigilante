@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { MunicipiosModel } from "../Models/MunicipiosModel";
 import { BaseController } from "./BaseController";
 
-export abstract class MunicipiosController extends BaseController {   
+export abstract class MunicipiosController extends BaseController {
   private constructor() {
     super();
   }
@@ -19,11 +19,11 @@ export abstract class MunicipiosController extends BaseController {
   }
 
   /**
-    * Returns the Municipios, for express
-    * 
-    * @param req
-    * @param res 
-    */
+   * Returns the Municipios, for express
+   *
+   * @param req
+   * @param res
+   */
   public static async getItem(req: Request, res: Response) {
     const item = await MunicipiosModel.query("uuid").eq(req.params.id).exec();
     res.status(200).json(item).end();

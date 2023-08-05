@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CentrosModel } from "../Models/CentrosModel";
 import { BaseController } from "./BaseController";
 
-export abstract class CentrosController extends BaseController {   
+export abstract class CentrosController extends BaseController {
   private constructor() {
     super();
   }
@@ -19,11 +19,11 @@ export abstract class CentrosController extends BaseController {
   }
 
   /**
-    * Returns the Centros, for express
-    * 
-    * @param req
-    * @param res 
-    */
+   * Returns the Centros, for express
+   *
+   * @param req
+   * @param res
+   */
   public static async getItem(req: Request, res: Response) {
     const item = await CentrosModel.query("uuid").eq(req.params.id).exec();
     res.status(200).json(item).end();

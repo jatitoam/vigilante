@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PartidosModel } from "../Models/PartidosModel";
 import { BaseController } from "./BaseController";
 
-export abstract class PartidosController extends BaseController {   
+export abstract class PartidosController extends BaseController {
   private constructor() {
     super();
   }

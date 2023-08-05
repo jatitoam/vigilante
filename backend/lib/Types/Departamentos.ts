@@ -1,5 +1,5 @@
 export interface Departamentos {
-    uuid: String;
-    nombre: String;
-    codigo: string;
+  uuid: String;
+  nombre: String;
+  codigo: string;
 }

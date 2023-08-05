@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { BaseController } from "./BaseController";
 import { DepartamentosModel } from "../Models/DepartamentosModel";
 import { MunicipiosModel } from "../Models/MunicipiosModel";
-import jwt from "jsonwebtoken";
 import { CentrosModel } from "../Models/CentrosModel";
 import { MesasModel } from "../Models/MesasModel";
+const jwt = require("jsonwebtoken");
 
 export abstract class FiscalesController extends BaseController {
   private constructor() {
