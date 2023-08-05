@@ -7,7 +7,7 @@ export function mesasSchema() {
     uuid: { type: String, required: true },
     número: { type: String, required: true },
     centro_uuid: { type: String, required: true },
-    inicia: { type: String, required: true },
+    inicia: { type: String },
     termina: { type: String },
     fiscales: {
       type: Array,

@@ -6,6 +6,7 @@ import { DepartamentosModel } from "../Models/DepartamentosModel";
 import { MunicipiosModel } from "../Models/MunicipiosModel";
 import { CentrosModel } from "../Models/CentrosModel";
 import { MesasModel } from "../Models/MesasModel";
+import { PartidosModel } from "../Models/PartidosModel";
 
 export abstract class RecuentosController extends BaseController {
   private constructor() {
@@ -19,200 +20,83 @@ export abstract class RecuentosController extends BaseController {
    * @param res
    */
   public static async updateRecuento(req: Request, res: Response) {
-    let tokenInfo: any;
-    // Middleware para verificar el JWT en las rutas protegidas
-    const verifyToken = (req: Request, res: Response, next: Function) => {
-      const token = req.headers["authorization"];
+    const partidos = req.body.partidos || [];
+    const tipo = req.body.tipo || "";
+    const uuid = req.body.uuid || "";
 
-      if (!token) {
-        return res.status(403).json({ error: "Token no proporcionado" });
+    // Check if the request is valid
+    if (
+      tipo.length === 0 ||
+      uuid.length === 0 ||
+      typeof partidos !== "object" ||
+      partidos.length === 0
+    ) {
+      return res.status(406).json().end();
+    }
+
+    // Choose the right model depending on the tipo sent
+    const model =
+      tipo === "departamento"
+        ? DepartamentosModel
+        : tipo === "municipio"
+        ? MunicipiosModel
+        : tipo === "centro"
+        ? CentrosModel
+        : tipo === "mesa"
+        ? MesasModel
+        : null;
+
+    // Check if the model is valid
+    if (!model) {
+      return res.status(406).json().end();
+    }
+
+    // Check if the uuid is valid by querying the model
+    const item = await model.get(uuid);
+
+    if (!item) {
+      return res.status(404).json().end();
+    }
+
+    // Checks that all the items inside partidos contains "votos" and "partido_uuid" fields, or else return 406
+    for (const partido of partidos) {
+      if (!partido.votos || !partido.partido_uuid) {
+        return res.status(406).json().end();
       }
+    }
 
-      jwt.verify(token, "secretkeyappearshere", (err: any, decoded: any) => {
-        console.log(err);
-        if (err) {
-          return res.status(401).json({ error: "Token inválido" });
-        }
+    // Gets all the partidos from the database
+    const allPartidos = await PartidosModel.scan().exec();
 
-        tokenInfo = decoded;
-        next();
-      });
-    };
+    // Checks that all the partidos inside partidos are valid, or else return 406
+    if (
+      partidos
+        .map((partido: any) => partido.partido_uuid)
+        .some(
+          (uuid: string) =>
+            !allPartidos.map((partido) => partido.uuid).includes(uuid)
+        )
+    ) {
+      return res.status(406).json().end();
+    }
 
-    verifyToken(req, res, async () => {
-      const cantidad = req.body.cantidad;
-      const partido_uuid = req.body.partido_uuid;
-      const departamentos = await DepartamentosModel.scan().exec();
-      const municipios = await MunicipiosModel.scan().exec();
-      const centros = await CentrosModel.scan().exec();
-      const mesas = await MesasModel.scan().exec();
+    // Checks that all partidos in the allPartidos array are present in the partidos array, or else return 406
+    if (
+      allPartidos
+        .map((partido) => partido.uuid)
+        .some(
+          (uuid) =>
+            !partidos.map((partido: any) => partido.partido_uuid).includes(uuid)
+        )
+    ) {
+      return res.status(406).json().end();
+    }
 
-      departamentos.forEach((element) => {
-        element.fiscales.forEach((fiscal: any) => {
-          if (fiscal.usuario_uuid == tokenInfo.uuid) {
-            let recuentos = element.recuentos;
-            var data = element;
-            var uuid = element.uuid;
-            delete data["uuid"];
-            var recuento: any = {};
+    // Updates the recuento in the given model, by first updating all the data inside "item"
+    item.recuentos = partidos;
+    await item.save();
 
-            if (recuentos.length === 0) {
-              recuento.partido_uuid = partido_uuid;
-              recuento.votos = cantidad;
-              recuento.dudas = 0;
-              recuento.impugnados = 0;
-
-              recuentos.push(recuento);
-            }
-
-            recuentos.forEach((item: any, index: any) => {
-              if (partido_uuid == item.partido_uuid) {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = item.votos + cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos[index] = recuento;
-              } else {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos.push(recuento);
-              }
-            });
-
-            DepartamentosModel.update({ uuid: uuid }, element.toJSON());
-          }
-        });
-      });
-
-      municipios.forEach((element) => {
-        element.fiscales.forEach((fiscal: any) => {
-          if (fiscal.usuario_uuid == tokenInfo.uuid) {
-            console.log(element);
-            let recuentos = element.recuentos;
-            var data = element;
-            var uuid = element.uuid;
-            delete data["uuid"];
-            var recuento: any = {};
-
-            if (recuentos.length === 0) {
-              recuento.partido_uuid = partido_uuid;
-              recuento.votos = cantidad;
-              recuento.dudas = 0;
-              recuento.impugnados = 0;
-
-              recuentos.push(recuento);
-            }
-
-            recuentos.forEach((item: any, index: any) => {
-              if (partido_uuid == item.partido_uuid) {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = item.votos + cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos[index] = recuento;
-              } else {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos.push(recuento);
-              }
-            });
-
-            MunicipiosModel.update({ uuid: uuid }, element.toJSON());
-          }
-        });
-      });
-
-      centros.forEach((element) => {
-        element.fiscales.forEach((fiscal: any) => {
-          if (fiscal.usuario_uuid == tokenInfo.uuid) {
-            let recuentos = element.recuentos;
-            var data = element;
-            var uuid = element.uuid;
-            delete data["uuid"];
-            var recuento: any = {};
-
-            if (recuentos.length === 0) {
-              recuento.partido_uuid = partido_uuid;
-              recuento.votos = cantidad;
-              recuento.dudas = 0;
-              recuento.impugnados = 0;
-
-              recuentos.push(recuento);
-            }
-
-            recuentos.forEach((item: any, index: any) => {
-              if (partido_uuid == item.partido_uuid) {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = item.votos + cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos[index] = recuento;
-              } else {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos.push(recuento);
-              }
-            });
-
-            CentrosModel.update({ uuid: uuid }, element.toJSON());
-          }
-        });
-      });
-
-      mesas.forEach((element) => {
-        element.fiscales.forEach((fiscal: any) => {
-          if (fiscal.usuario_uuid == tokenInfo.uuid) {
-            let recuentos = element.recuentos;
-            var data = element;
-            var uuid = element.uuid;
-            delete data["uuid"];
-            var recuento: any = {};
-
-            if (recuentos.length === 0) {
-              recuento.partido_uuid = partido_uuid;
-              recuento.votos = cantidad;
-              recuento.dudas = 0;
-              recuento.impugnados = 0;
-
-              recuentos.push(recuento);
-            }
-
-            recuentos.forEach((item: any, index: any) => {
-              if (partido_uuid == item.partido_uuid) {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = item.votos + cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos[index] = recuento;
-              } else {
-                recuento.partido_uuid = partido_uuid;
-                recuento.votos = cantidad;
-                recuento.dudas = 0;
-                recuento.impugnados = 0;
-
-                recuentos.push(recuento);
-              }
-            });
-
-            MesasModel.update({ uuid: uuid }, element.toJSON());
-          }
-        });
-      });
-
-      res.status(200).json().end();
-    });
+    // Returns 201 to complete the request
+    return res.status(201).json().end();
   }
 }

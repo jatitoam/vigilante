@@ -56,10 +56,14 @@ router
   .get(UsuariosController.verifyToken, FiscalesController.getFromUser);
 
 // Partidos Routes
-router.route("/partidos").get(PartidosController.getList);
+router
+  .route("/partidos")
+  .get(UsuariosController.verifyToken, PartidosController.getList);
 
 // Recuentos Routes
-router.route("/recuentos").put(RecuentosController.updateRecuento);
+router
+  .route("/recuentos")
+  .put(UsuariosController.verifyToken, RecuentosController.updateRecuento);
 
 // Login route
 router.route("/login").post(UsuariosController.login);

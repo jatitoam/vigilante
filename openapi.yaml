@@ -101,6 +101,8 @@ paths:
       responses:
         "201":
           description: Operación exitosa
+        "404":
+          description: No se encontró la mesa, centro, municipio o departamento
 components:
   securitySchemes:
     bearerAuth:
