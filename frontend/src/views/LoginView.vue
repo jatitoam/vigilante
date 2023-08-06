@@ -59,7 +59,7 @@ async function login() {
     return
   }
 
-  const login: Usuario | false = await Login.getInstance().login(username.value, password.value)
+  const login: Usuario | false = await Login.login(username.value, password.value)
   if (login === false) {
     alert.value = 'Usuario o contraseña incorrectos'
     displayAlert.value = true

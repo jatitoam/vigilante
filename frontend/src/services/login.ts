@@ -2,22 +2,12 @@ import type { Usuario } from '@/types/Usuario'
 import { Base } from './Base'
 
 export class Login extends Base {
-  async login(username: string, password: string): Promise<Usuario | false> {
-    try {
-      const response = await this.client.post('/login', { username, password })
-      if (response.status !== 200) {
-        return false
-      }
-      if (typeof response.data.token === 'undefined') {
-        return false
-      }
-      return this.parseJwt(response.data.token)
-    } catch {
-      return false
-    }
+  public static async login(username: string, password: string): Promise<Usuario | false> {
+    const data = await Base.call('post', '/login', { username, password })
+    return this.parseJwt(data.token)
   }
 
-  parseJwt(jwt: string): Usuario | false {
+  protected static parseJwt(jwt: string): Usuario | false {
     try {
       const decoded = JSON.parse(atob(jwt.split('.')[1]))
       return {
@@ -29,13 +19,5 @@ export class Login extends Base {
     } catch {
       return false
     }
-  }
-
-  // Singleton pattern
-  static getInstance(): Login {
-    if (!Login.instance) {
-      Base.instance = new Login()
-    }
-    return Base.instance as Login
   }
 }
