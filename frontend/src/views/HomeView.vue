@@ -17,11 +17,11 @@
           <div class="table-row-group">
             <div class="table-row" v-for="fiscal in fiscales" :key="fiscal.uuid">
               <div class="table-cell text-center">
-                <span class="text-blue-500 cursor-pointer" @click="router.push(`/fiscal/${fiscal.uuid}`)">{{ fiscal.nombre }}</span>
+                <span class="text-blue-500 cursor-pointer" @click="router.push(`/fiscal/{fiscal.tipo}/${fiscal.uuid}`)">{{ toWordUppercase(fiscal.nombre) }}</span>
               </div>
-              <div class="table-cell text-center">{{ fiscal.tipo }}</div>
+              <div class="table-cell text-center">{{ toWordUppercase(fiscal.tipo) }}</div>
               <div class="table-cell text-right">
-                <ChevronDoubleRightIcon class="h-5 w-5 text-blue-500 cursor-pointer" @click="router.push(`/fiscal/${fiscal.uuid}`)" />
+                <ChevronDoubleRightIcon class="h-5 w-5 text-blue-500 cursor-pointer" @click="router.push(`/fiscal/${fiscal.tipo}/${fiscal.uuid}`)" />
               </div>
             </div>
           </div>
@@ -61,6 +61,10 @@ async function getFiscales() {
   }
 
   fiscales.value = fiscalesTemp as Array<Fiscal>
+}
+
+function toWordUppercase(text: string) {
+  return text.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))
 }
 
 getFiscales()
