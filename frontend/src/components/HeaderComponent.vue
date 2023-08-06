@@ -1,7 +1,7 @@
 <template>
     <div>
         <header class="bg-blue h-10 text-white justify-center flex">
-            <div class="title flex-grow mx-2 center-vertical heading-style text-white">
+            <div class="title flex-grow mx-2 center-vertical heading-style text-white text-left">
                 {{ title }}
             </div>
             <div class="user mx-5 center-vertical relative" v-if="usuario !== ''">

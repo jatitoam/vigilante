@@ -60,7 +60,7 @@ export abstract class RecuentosController extends BaseController {
 
     // Checks that all the items inside partidos contains "votos" and "partido_uuid" fields, or else return 406
     for (const partido of partidos) {
-      if (!partido.votos || !partido.partido_uuid) {
+      if (partido.votos === null || !partido.partido_uuid) {
         return res.status(406).json().end();
       }
     }
@@ -94,7 +94,11 @@ export abstract class RecuentosController extends BaseController {
 
     // Updates the recuento in the given model, by first updating all the data inside "item"
     item.recuentos = partidos;
-    await item.save();
+    try {
+      await item.save();
+    } catch {
+      return res.status(406).json().end();
+    }
 
     // Returns 201 to complete the request
     return res.status(201).json().end();

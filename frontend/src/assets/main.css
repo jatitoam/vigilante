@@ -9,7 +9,7 @@
 
     h1 {
         font-size: 2rem;
-        @apply text-center;
+        font-weight: 700;
     }
 
     h2 {
@@ -31,11 +31,12 @@
 
     .heading-font {
         font-family: "Playfair", serif;
-        }
+    }
 
     .heading-style {
         @apply heading-font;
         @apply text-blue;
+        @apply text-center;
     }
 
     a {
