@@ -1,5 +1,5 @@
 <template>
-  <div class="home-view">
+  <div class="fiscales-view">
     <img class="mx-auto h-24 w-auto m-2" src="@/assets/images/logo.jpg" alt="Logo">
 
     <div v-if="fiscales.length > 0">
@@ -17,11 +17,11 @@
           <div class="table-row-group">
             <div class="table-row" v-for="fiscal in fiscales" :key="fiscal.uuid">
               <div class="table-cell text-center">
-                <span class="text-blue-500 cursor-pointer" @click="router.push(`/fiscal/{fiscal.tipo}/${fiscal.uuid}`)">{{ toWordUppercase(fiscal.nombre) }}</span>
+                <span class="text-blue-500 cursor-pointer" @click="router.push(`/recuento/${fiscal.tipo}/${fiscal.uuid}`)">{{ toWordUppercase(fiscal.nombre) }}</span>
               </div>
               <div class="table-cell text-center">{{ toWordUppercase(fiscal.tipo) }}</div>
               <div class="table-cell text-right">
-                <ChevronDoubleRightIcon class="h-5 w-5 text-blue-500 cursor-pointer" @click="router.push(`/fiscal/${fiscal.tipo}/${fiscal.uuid}`)" />
+                <ChevronDoubleRightIcon class="h-5 w-5 text-blue-500 cursor-pointer" @click="router.push(`/recuento/${fiscal.tipo}/${fiscal.uuid}`)" />
               </div>
             </div>
           </div>

@@ -44,7 +44,7 @@ const sessionStore = useSessionStore()
 const router = useRouter()
 
 if (typeof sessionStore.getUuid !== 'undefined') {
-  router.push({ name: 'home' })
+  router.push({ name: 'fiscales' })
 }
 
 // Methods
@@ -69,6 +69,6 @@ async function login() {
   displayAlert.value = false
   sessionStore.login(login)
 
-  router.push({ name: 'home' })
+  router.push({ name: 'fiscales' })
 }
 </script>
