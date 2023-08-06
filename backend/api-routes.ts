@@ -6,6 +6,8 @@ import { FiscalesController } from "./lib/Controllers/FiscalesController";
 import { UsuariosController } from "./lib/Controllers/UsuariosController";
 import { PartidosController } from "./lib/Controllers/PartidosController";
 import { RecuentosController } from "./lib/Controllers/RecuentosController";
+import { MesasController } from "./lib/Controllers/MesasController";
+import { CentrosController } from "./lib/Controllers/CentrosController";
 
 const router: Router = Router();
 
@@ -43,12 +45,22 @@ router.get("/health", function (req, res) {
 });
 
 // Departamentos routes
-router.route("/departamentos").get(DepartamentosController.getList);
-router.route("/departamentos/:id").get(DepartamentosController.getItem);
+router
+  .route("/departamentos")
+  .get(UsuariosController.verifyToken, DepartamentosController.getList);
+
+router
+  .route("/departamentos/:id")
+  .get(UsuariosController.verifyToken, DepartamentosController.getItem);
 
 // Municipio Routes
-router.route("/municipios").get(MunicipiosController.getList);
-router.route("/municipios/:id").get(MunicipiosController.getItem);
+router
+  .route("/municipios")
+  .get(UsuariosController.verifyToken, MunicipiosController.getList);
+
+router
+  .route("/municipios/:id")
+  .get(UsuariosController.verifyToken, MunicipiosController.getItem);
 
 // Fiscales Routes
 router
@@ -64,6 +76,16 @@ router
 router
   .route("/recuentos")
   .put(UsuariosController.verifyToken, RecuentosController.updateRecuento);
+
+// Mesas routes
+router
+  .route("/mesas/:id")
+  .get(UsuariosController.verifyToken, MesasController.getItem);
+
+// Centros controller
+router
+  .route("/centros/:id")
+  .get(UsuariosController.verifyToken, CentrosController.getItem);
 
 // Login route
 router.route("/login").post(UsuariosController.login);
