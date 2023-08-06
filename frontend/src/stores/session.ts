@@ -1,23 +1,23 @@
 import { defineStore } from 'pinia'
-import type { Usuario } from '@/types/usuario'
+import type { Usuario } from '@/types/Usuario'
 
-// Define a new session store for the current user
 export const useSessionStore = defineStore('session', {
-  // a function that returns a fresh state
   state: () => ({
-    // Defines usuario variable as an instance of Usuario
     usuario: null as Usuario | null
   }),
-  // optional getters
   getters: {
     getUuid: (state) => state.usuario?.uuid,
     getNombre: (state) => state.usuario?.nombre,
-    getJwt: (state) => state.usuario?.jwt
+    getJwt: (state) => state.usuario?.jwt,
+    getUsuario: (state) => state.usuario?.usuario
   },
-  // setters
   actions: {
-    setUsuario(usuario: Usuario) {
+    login(usuario: Usuario) {
       this.usuario = usuario
+    },
+    logout() {
+      this.usuario = null
     }
-  }
+  },
+  persist: true
 })

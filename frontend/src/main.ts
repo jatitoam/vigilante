@@ -1,10 +1,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
 
 import './assets/main.css'
 
@@ -12,11 +11,11 @@ document.title = import.meta.env.VIG_APP_TITLE
 
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia()
+
+pinia.use(piniaPluginPersistedstate)
+
+app.use(pinia)
 app.use(router)
-
-axios.defaults.baseURL = import.meta.env.VIG_API_URL
-
-app.use(VueAxios, axios)
 
 app.mount('#app')

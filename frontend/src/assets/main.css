@@ -9,6 +9,7 @@
 
     h1 {
         font-size: 2rem;
+        @apply text-center;
     }
 
     h2 {
@@ -46,9 +47,13 @@
         @apply text-blue-900;
     }
 
-    footer {
-        a:hover, :focus {
-            @apply text-blue-300;
-        }
+    footer a:hover, :focus {
+        @apply text-blue-300;
+    }
+    
+    .center-vertical {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
     }
 }

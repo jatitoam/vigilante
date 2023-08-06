@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col h-screen dark:bg-gray-900">
-    <header class="bg-blue h-10 text-white text-center flex flex-col justify-center heading-font">
-      {{ title }}
-    </header>
+    <HeaderComponent />
     <main class="container mx-auto flex-grow">
       <RouterView />
     </main>
@@ -16,6 +14,5 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-
-const title = import.meta.env.VIG_APP_TITLE
+import HeaderComponent from '@/components/HeaderComponent.vue'
 </script>

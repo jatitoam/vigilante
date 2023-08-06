@@ -1,6 +1,7 @@
 <template>
   <div class="home-view">
-    <h1>Home</h1>
+    <img class="mx-auto h-24 w-auto m-2" src="@/assets/images/logo.jpg" alt="Logo">
+    <h1>Fiscalías Disponibles</h1>
   </div>
 </template>
 

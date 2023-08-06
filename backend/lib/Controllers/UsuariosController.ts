@@ -39,9 +39,9 @@ export abstract class UsuariosController extends BaseController {
     if (username === data.usuario && password === data.contraseña) {
       const usuario = data.usuario;
       const uuid = data.uuid;
-      const nombre = data.nombre;
-      const apellido = data.apellido;
-      const token = jwt.sign({ usuario, uuid, nombre, apellido }, jwtKey, {
+      const nombres = data.nombres;
+      const apellidos = data.apellidos;
+      const token = jwt.sign({ usuario, uuid, nombres, apellidos }, jwtKey, {
         expiresIn: jwtExpiration,
       });
       res.json({ token });
