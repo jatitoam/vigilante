@@ -1,7 +1,7 @@
 export interface Departamentos {
   uuid: string;
   nombre: string;
-  codigo: string;
+  código: string;
   fiscales: Fiscales[];
   recuentos: Recuentos[];
   notas: Notas[];

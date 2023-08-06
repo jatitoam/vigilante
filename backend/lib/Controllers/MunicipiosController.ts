@@ -25,7 +25,8 @@ export abstract class MunicipiosController extends BaseController {
    * @param res
    */
   public static async getItem(req: Request, res: Response) {
-    const item = await MunicipiosModel.query("uuid").eq(req.params.id).exec();
+    const item = await MunicipiosModel.get(req.params.id);
+    if (!item) return res.status(404).end();
     res.status(200).json(item).end();
   }
 }

@@ -25,9 +25,8 @@ export abstract class DepartamentosController extends BaseController {
    * @param res
    */
   public static async getItem(req: Request, res: Response) {
-    const item = await DepartamentosModel.query("uuid")
-      .eq(req.params.id)
-      .exec();
+    const item = await DepartamentosModel.get(req.params.id);
+    if (!item) return res.status(404).end();
     res.status(200).json(item).end();
   }
 }

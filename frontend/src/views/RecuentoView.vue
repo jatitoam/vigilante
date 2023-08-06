@@ -2,7 +2,7 @@
     <div class="recuento-view">
         <h1>
             Fiscalización de {{ props.tipo }} <br />
-            {{ props.uuid }}
+            {{ nombre }}
         </h1>
 
         <h3>Recuento de Votos</h3>
@@ -31,8 +31,14 @@
     import { useRouter } from 'vue-router'
 
     import type { Partido } from '@/types/Partido'
+    import type { RecuentoAsignado } from '@/types/RecuentoAsignado'
+
     import { Partidos } from '@/services/Partidos'
     import { Recuentos } from '@/services/Recuentos'
+    import { Mesas } from '@/services/Mesas'
+    import { Centros } from '@/services/Centros'
+    import { Municipios } from '@/services/Municipios'
+    import { Departamentos } from '@/services/Departamentos'
 
     const sessionStore = useSessionStore()
     const router = useRouter()
@@ -54,7 +60,8 @@
     const recuentos = ref([] as Array<string>)
     const displayAlert = ref(false)
     const alert = ref('')
-
+    const nombre = ref('')
+    
     async function loadData() {
         const partidosTemp: Array<Partido> | false = await Partidos.getPartidos()
 
@@ -64,6 +71,40 @@
         }
 
         partidos.value = partidosTemp as Array<Partido>
+        let data;
+        let recuentosAsignados : Array<RecuentoAsignado> = []
+
+        switch (props.tipo) {
+            case 'mesa':
+                data = await Mesas.get(props.uuid)
+                nombre.value = `Mesa número ${data.número}`
+                break
+            case 'centro':
+                data = await Centros.get(props.uuid)
+                nombre.value = `Centro de votación ${data.nombre}`
+                break
+            case 'municipio':
+                data = await Municipios.get(props.uuid)
+                nombre.value = `Municipio ${data.nombre}`
+                break
+            case 'departamento':
+                data = await Departamentos.get(props.uuid)
+                nombre.value = `Departamento ${data.nombre}`
+                break
+            default:
+                router.push('/')
+        }
+
+        recuentosAsignados = data.recuentos;
+
+        partidos.value.forEach((partido, index) => {
+            const recuento = recuentosAsignados.find(recuento => recuento.partido_uuid === partido.uuid)
+            if (recuento) {
+                recuentos.value[index] = recuento.votos.toString()
+            } else {
+                recuentos.value[index] = '0'
+            }
+        })
     }
 
     async function save() {

@@ -1,7 +1,7 @@
 export interface Centros {
   uuid: string;
   nombre: string;
-  codigo: string;
+  código: string;
   municipio_uuid: string;
   fiscales: Fiscales[];
   recuentos: Recuentos[];

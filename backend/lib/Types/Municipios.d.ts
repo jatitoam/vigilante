@@ -1,7 +1,7 @@
 export interface Municipios {
   uuid: string;
   nombre: string;
-  codigo: string;
+  código: string;
   departamento_uuid: string;
   fiscales: Fiscales[];
   recuentos: Recuentos[];

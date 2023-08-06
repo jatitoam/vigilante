@@ -47,7 +47,7 @@
         @apply text-blue-900;
     }
 
-    footer a:hover, :focus {
+    footer a:hover, footer a:focus {
         @apply text-blue-300;
     }
     
@@ -65,5 +65,13 @@
 
     .table-cell {
         @apply p-1;
+    }
+
+    header a {
+        @apply text-white
+    }
+
+    header a:hover, a:focus {
+        @apply text-gray-300
     }
 }
