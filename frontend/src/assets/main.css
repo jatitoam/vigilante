@@ -56,4 +56,14 @@
        flex-direction: column;
        justify-content: center;
     }
+
+    .table-header-group {
+        @apply bg-blue;
+        @apply text-white;
+        @apply uppercase;
+    }
+
+    .table-cell {
+        @apply p-1;
+    }
 }

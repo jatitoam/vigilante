@@ -2,8 +2,6 @@ import type { Usuario } from '@/types/Usuario'
 import { Base } from './Base'
 
 export class Login extends Base {
-  protected static instance: Login
-
   async login(username: string, password: string): Promise<Usuario | false> {
     try {
       const response = await this.client.post('/login', { username, password })
@@ -36,8 +34,8 @@ export class Login extends Base {
   // Singleton pattern
   static getInstance(): Login {
     if (!Login.instance) {
-      Login.instance = new Login()
+      Base.instance = new Login()
     }
-    return Login.instance
+    return Base.instance as Login
   }
 }

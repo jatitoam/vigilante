@@ -81,7 +81,7 @@ export abstract class FiscalesController extends BaseController {
           var mesa: any = {};
           mesa.tipo = "mesa";
           mesa.uuid = element.uuid;
-          mesa.número = element.número;
+          mesa.nombre = element.número;
           fiscales.push(mesa);
         }
       });
