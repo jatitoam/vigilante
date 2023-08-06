@@ -4,16 +4,51 @@
 
 @layer base {
     h1, h2, h3, h4, h5, h6 {
-        @apply heading-font;
+        @apply heading-style;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
     }
 
     body {
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Josefin Sans', sans-serif;
         font-size: 16px;
     }
 
     .heading-font {
-        font-family: "Open Sans", serif;
+        font-family: "FairPlay", serif;
+        }
+
+    .heading-style {
+        @apply heading-font;
         text-transform: uppercase;
+        @apply text-blue;
+    }
+
+    a {
+        @apply text-blue;
+    }
+
+    a:hover, a:focus {
+        @apply text-blue-900;
+    }
+
+    footer {
+        a:hover, :focus {
+            @apply text-blue-300;
+        }
     }
 }

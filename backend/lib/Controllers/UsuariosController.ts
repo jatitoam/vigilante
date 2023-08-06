@@ -23,11 +23,17 @@ export abstract class UsuariosController extends BaseController {
 
     // Return 406 if no username or password provided
     if (!username || !password) {
-      res.status(406).json({ error: "Credenciales inválidas" });
+      res.status(403).json({ error: "Credenciales inválidas" });
       return;
     }
 
     const item = await UsuariosModel.scan("usuario").eq(username).exec();
+
+    if (!item || item.length === 0) {
+      res.status(403).json({ error: "Credenciales inválidas" });
+      return;
+    }
+
     const data = item.toJSON()[0];
 
     if (username === data.usuario && password === data.contraseña) {
@@ -40,7 +46,7 @@ export abstract class UsuariosController extends BaseController {
       });
       res.json({ token });
     } else {
-      res.status(401).json({ error: "Credenciales inválidas" });
+      res.status(403).json({ error: "Credenciales inválidas" });
     }
   }
 
