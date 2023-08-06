@@ -25,17 +25,16 @@
     }
 
     body {
-        font-family: 'Josefin Sans', sans-serif;
+        font-family: 'Josefin Sans', serif;
         font-size: 16px;
     }
 
     .heading-font {
-        font-family: "FairPlay", serif;
+        font-family: "Playfair", serif;
         }
 
     .heading-style {
         @apply heading-font;
-        text-transform: uppercase;
         @apply text-blue;
     }
 
