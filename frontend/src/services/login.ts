@@ -13,7 +13,8 @@ export class Login extends Base {
       return {
         uuid: decoded.uuid,
         usuario: decoded.usuario,
-        nombre: decoded.nombres + ' ' + decoded.apellidos,
+        nombre: decoded.nombres,
+        apellido: decoded.apellidos,
         jwt: jwt
       }
     } catch {

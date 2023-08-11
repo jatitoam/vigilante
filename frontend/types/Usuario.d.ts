@@ -3,6 +3,7 @@ declare module '@/types/Usuario' {
     uuid: string
     usuario: string
     nombre: string
+    apellido: string
     jwt: string
   }
 }

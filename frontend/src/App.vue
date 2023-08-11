@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col h-screen dark:bg-gray-900">
+  <div class="flex flex-col h-screen dark:bg-gray-900 dark:text-white">
     <HeaderComponent />
-    <main class="container mx-auto flex-grow">
+    <main class="container mx-auto flex-grow px-2 pb-2">
       <RouterView />
     </main>
     <footer class="h-10 bg-purple text-white text-center flex flex-col justify-center text-sm heading-font">
@@ -13,6 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import HeaderComponent from '@/components/HeaderComponent.vue'
+  import { RouterView } from 'vue-router'
+  import HeaderComponent from '@/components/HeaderComponent.vue'
 </script>

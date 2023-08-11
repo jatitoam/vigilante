@@ -1,6 +1,5 @@
 <template>
   <div class="login-view">
-    <img class="mx-auto h-24 w-auto m-2" src="@/assets/images/logo.jpg" alt="Logo">
     <h1>Iniciar sesión</h1>
     <div class="grid grid-cols-1 lg:grid-cols-3 grid-flow-col">
       <form class="lg:col-start-2 bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-700 px-8 pt-6 pb-8 mb-4">
@@ -44,7 +43,7 @@ const sessionStore = useSessionStore()
 const router = useRouter()
 
 if (typeof sessionStore.getUuid !== 'undefined') {
-  router.push({ name: 'fiscales' })
+  router.push({ name: 'dashboard' })
 }
 
 // Methods
@@ -69,6 +68,6 @@ async function login() {
   displayAlert.value = false
   sessionStore.login(login)
 
-  router.push({ name: 'fiscales' })
+  router.push({ name: 'dashboard' })
 }
 </script>

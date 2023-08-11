@@ -8,6 +8,11 @@ export const useSessionStore = defineStore('session', {
   getters: {
     getUuid: (state) => state.usuario?.uuid,
     getNombre: (state) => state.usuario?.nombre,
+    getApellido: (state) => state.usuario?.apellido,
+    getNombreCompleto: (state) =>
+      typeof state.usuario?.nombre === 'undefined' || typeof state.usuario?.apellido === 'undefined'
+        ? ''
+        : `${state.usuario?.nombre} ${state.usuario?.apellido}`,
     getJwt: (state) => state.usuario?.jwt,
     getUsuario: (state) => state.usuario?.usuario
   },
