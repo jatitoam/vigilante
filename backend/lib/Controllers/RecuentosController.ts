@@ -53,6 +53,7 @@ export abstract class RecuentosController extends BaseController {
 
     // Check if the uuid is valid by querying the model
     const item = await model.get(uuid);
+    const oldItem = await model.get(uuid);
 
     if (!item) {
       return res.status(404).json().end();
@@ -94,7 +95,74 @@ export abstract class RecuentosController extends BaseController {
 
     // Updates the recuento in the given model, by first updating all the data inside "item"
     item.recuentos = partidos;
+
     try {
+      if (tipo == 'mesa') {
+        const centro = await CentrosModel.get(item.centro_uuid);
+        const municipio = await MunicipiosModel.get(centro.municipio_uuid);
+        const departamento = await DepartamentosModel.get(municipio.departamento_uuid);
+        
+        centro.recuentos.map((element: any) => {
+            let updatePartido = partidos.filter((item: any) => item.partido === element.partido);
+            let oldPartido = oldItem.recuentos.filter((item: any) => item.partido === element.partido);
+            element.votos += updatePartido[0].votos - oldPartido[0].votos;   
+            return element;
+        });
+
+        municipio.recuentos.map((element: any) => {
+          let updatePartido = partidos.filter((item: any) => item.partido === element.partido);
+          let oldPartido = oldItem.recuentos.filter((item: any) => item.partido === element.partido);
+          element.votos += updatePartido[0].votos - oldPartido[0].votos;   
+          return element;
+        });
+        
+        departamento.recuentos.map((element: any) => {
+          let updatePartido = partidos.filter((item: any) => item.partido === element.partido);
+          let oldPartido = oldItem.recuentos.filter((item: any) => item.partido === element.partido);
+          element.votos += updatePartido[0].votos - oldPartido[0].votos;   
+          return element;
+        });
+
+        centro.save();
+        municipio.save();
+        departamento.save();
+     }
+
+     if (tipo == 'centro') {
+      const municipio = await MunicipiosModel.get(item.municipio_uuid);
+      const departamento = await DepartamentosModel.get(municipio.departamento_uuid);
+     
+      municipio.recuentos.map((element: any) => {
+        let updatePartido = partidos.filter((item: any) => item.partido === element.partido);
+        let oldPartido = oldItem.recuentos.filter((item: any) => item.partido === element.partido);
+        element.votos += updatePartido[0].votos - oldPartido[0].votos;   
+        return element;
+      });
+      
+      departamento.recuentos.map((element: any) => {
+        let updatePartido = partidos.filter((item: any) => item.partido === element.partido);
+        let oldPartido = oldItem.recuentos.filter((item: any) => item.partido === element.partido);
+        element.votos += updatePartido[0].votos - oldPartido[0].votos;   
+        return element;
+      });
+
+      municipio.save();
+      departamento.save();
+     }
+
+     if (tipo == 'municipio') {
+      const departamento = await DepartamentosModel.get(item.departamento_uuid);
+     
+      departamento.recuentos.map((element: any) => {
+        let updatePartido = partidos.filter((item: any) => item.partido === element.partido);
+        let oldPartido = oldItem.recuentos.filter((item: any) => item.partido === element.partido);
+        element.votos += updatePartido[0].votos - oldPartido[0].votos;   
+        return element;
+      });
+
+      departamento.save();
+     }
+
       await item.save();
     } catch {
       return res.status(406).json().end();
