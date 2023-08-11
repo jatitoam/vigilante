@@ -83,12 +83,12 @@ router
   .get(UsuariosController.verifyToken, MesasController.getItem);
 
 router
-  .route("/mesas/centro/:id")
-  .get(UsuariosController.verifyToken, MesasController.getByCentro);
+  .route("/municipios/departamento/:id")
+  .get(UsuariosController.verifyToken, MunicipiosController.getByDepartamento);
 
 // Centros controller
 router
-  .route("/centros/:id")
+  .route("/mesas/:id")
   .get(UsuariosController.verifyToken, CentrosController.getItem);
 
 // Login route
