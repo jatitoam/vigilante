@@ -37,7 +37,7 @@ export abstract class MunicipiosController extends BaseController {
    */
   public static async getByDepartamento(req: Request, res: Response) {
     const items = await MunicipiosModel.scan('departamento_uuid').eq(req.params.id).exec();
-
+    if (!items) return res.status(404).end();
     let newItems = items.map(function (item: any){ return [{"uuid": item.uuid, "nombre": item.nombre, "código": item.código}]})
     res.status(200).json(newItems).end();
   }

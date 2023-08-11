@@ -86,9 +86,17 @@ router
   .route("/municipios/departamento/:id")
   .get(UsuariosController.verifyToken, MunicipiosController.getByDepartamento);
 
+router
+  .route("/centros/municipio/:id")
+  .get(UsuariosController.verifyToken, CentrosController.getByMunicipio);
+
+router
+  .route("/mesas/centro/:id")
+  .get(UsuariosController.verifyToken, MesasController.getByCentro);
+
 // Centros controller
 router
-  .route("/mesas/:id")
+  .route("/centros/:id")
   .get(UsuariosController.verifyToken, CentrosController.getItem);
 
 // Login route
