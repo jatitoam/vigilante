@@ -29,4 +29,17 @@ export abstract class MesasController extends BaseController {
     if (!item) return res.status(404).end();
     res.status(200).json(item).end();
   }
+
+  /**
+   * 
+   * @param req
+   * @param res 
+   */
+    public static async getByCentro(req: Request, res: Response) {
+      const items = await MesasModel.scan('centro_uuid').eq(req.params.id).exec();
+      if (!items) return res.status(404).end();
+  
+      let newItems = items.map(function (item: any){ return [{"uuid": item.uuid, "número": item.número}]})
+      res.status(200).json(newItems).end();
+    }
 }

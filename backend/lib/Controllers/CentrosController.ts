@@ -29,4 +29,16 @@ export abstract class CentrosController extends BaseController {
     if (!item) return res.status(404).end();
     res.status(200).json(item).end();
   }
+
+  /**
+   * 
+   * @param req
+   * @param res 
+   */
+  public static async getByMunicipio(req: Request, res: Response) {
+    const items = await CentrosModel.scan('municipio_uuid').eq(req.params.id).exec();
+    if (!items) return res.status(404).end();
+    let newItems = items.map(function (item: any){ return [{"uuid": item.uuid, "nombre": item.nombre, "código": item.código}]})
+    res.status(200).json(newItems).end();
+  }
 }
