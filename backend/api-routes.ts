@@ -82,6 +82,10 @@ router
   .route("/mesas/:id")
   .get(UsuariosController.verifyToken, MesasController.getItem);
 
+router
+  .route("/mesas/centro/:id")
+  .get(UsuariosController.verifyToken, MesasController.getByCentro);
+
 // Centros controller
 router
   .route("/centros/:id")
