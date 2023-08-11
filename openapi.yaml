@@ -43,9 +43,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Login'
-  /fiscales:
+        "403":
+          description: Credenciales inválidas
+  /departamentos:
     get:
-      summary: Despliega las fiscalías disponibles del usuario ingresado en su JWT
+      summary: Despliega los departamentos disponibles
       security:
         - bearerAuth: []
       responses:
@@ -56,38 +58,195 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Fiscal'
-  /partidos:
+                  $ref: '#/components/schemas/Departamento'
+  /departamentos/{departamento_uuid}:
     get:
-      summary: Despliega los partidos disponibles
+      summary: Despliega el departamento especificado
       security:
         - bearerAuth: []
+      parameters:
+        - name: departamento_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: Operación exitosa
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Partido'
-  /recuentos:
+                $ref: '#/components/schemas/Departamento'
+        "404":
+          description: No se encontró el departamento
+  /departamentos/{departamento_uuid}/reset:
     put:
-      summary: Actualiza el recuento de votos de una mesa, centro, municipio o departamento
+      summary: Reinicia el recuento de votos de un departamento y todos sus municipios, centros y mesas
       security:
         - bearerAuth: []
+      parameters:
+        - name: departamento_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Operación exitosa
+        "404":
+          description: No se encontró el departamento
+  /departamentos/{departamento_uuid}/municipios:
+    get:
+      summary: Despliega los municipios de un departamento determinado
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: departamento_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Municipio'
+        "404":
+          description: No se encontró el departamento
+  /municipios/{municipio_uuid}:
+    get:
+      summary: Despliega el municipio especificado
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: municipio_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Municipio'
+        "404":
+          description: No se encontró el municipio
+  /municipios/{municipio_uuid}/centros:
+    get:
+      summary: Despliega los centros de un municipio determinado
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: municipio_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Centro'
+        "404":
+          description: No se encontró el municipio
+  /centros/{centro_uuid}:
+    get:
+      summary: Despliega el centro especificado
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: centro_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Centro'
+        "404":
+          description: No se encontró el centro
+  /centros/{centro_uuid}/mesas:
+    get:
+      summary: Despliega las mesas de un centro determinado
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: centro_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mesa'
+        "404":
+          description: No se encontró el centro
+  /mesas/{mesa_uuid}:
+    get:
+      summary: Despliega la mesa especificada
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: mesa_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mesa'
+        "404":
+          description: No se encontró la mesa
+  /mesas/{mesa_uuid}/recuentos:
+    put:
+      summary: Actualiza el recuento de votos de una mesa
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: mesa_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                tipo:
-                  type: string
-                  enum: [mesa, centro, municipio, departamento]
-                uuid:
-                  type: string
-                  format: uuid
                 partidos:
                   type: array
                   items:
@@ -102,7 +261,21 @@ paths:
         "201":
           description: Operación exitosa
         "404":
-          description: No se encontró la mesa, centro, municipio o departamento
+          description: No se encontró la mesa
+  /partidos:
+    get:
+      summary: Despliega los partidos disponibles
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Partido'
 components:
   securitySchemes:
     bearerAuth:
@@ -125,21 +298,68 @@ components:
         token:
           type: string
           format: JWT
-    Fiscal:
-      type: array
-      items:
-        type: object
-        properties:
-          uuid:
-            type: string
-            format: uuid
-          tipo:
-            type: string
-            enum: [mesa, centro, municipio, departamento]
-          nombre:
-            type: string
-          codigo:
-            type: string
+    Departamento:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        código:
+          type: string
+        recuentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recuento'
+    Municipio:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        código:
+          type: string
+        recuentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recuento'
+    Centro:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        código:
+          type: string
+        recuentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recuento'
+    Mesa:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        número:
+          type: string
+        recuentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recuento'
+    Recuento:
+      type: object
+      properties:
+        partido_uuid:
+          type: string
+          format: uuid
+        votos:
+          type: integer
     Partido:
       type: object
       properties:
@@ -147,6 +367,8 @@ components:
           type: string
           format: uuid
         nombre:
+          type: string
+        código:
           type: string
         color:
           type: string

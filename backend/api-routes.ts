@@ -2,10 +2,8 @@ import { Router } from "express";
 import * as fs from "fs";
 import { DepartamentosController } from "./lib/Controllers/DepartamentosController";
 import { MunicipiosController } from "./lib/Controllers/MunicipiosController";
-import { FiscalesController } from "./lib/Controllers/FiscalesController";
 import { UsuariosController } from "./lib/Controllers/UsuariosController";
 import { PartidosController } from "./lib/Controllers/PartidosController";
-import { RecuentosController } from "./lib/Controllers/RecuentosController";
 import { MesasController } from "./lib/Controllers/MesasController";
 import { CentrosController } from "./lib/Controllers/CentrosController";
 
@@ -44,6 +42,9 @@ router.get("/health", function (req, res) {
   });
 });
 
+// Login route
+router.route("/login").post(UsuariosController.login);
+
 // Departamentos routes
 router
   .route("/departamentos")
@@ -53,53 +54,44 @@ router
   .route("/departamentos/:id")
   .get(UsuariosController.verifyToken, DepartamentosController.getItem);
 
+router
+  .route("/departamentos/:id/reset")
+  .put(UsuariosController.verifyToken, DepartamentosController.resetRecuentos);
+
 // Municipio Routes
 router
-  .route("/municipios")
-  .get(UsuariosController.verifyToken, MunicipiosController.getList);
+  .route("/departamentos/:id/municipios")
+  .get(UsuariosController.verifyToken, MunicipiosController.getByDepartamento);
 
 router
   .route("/municipios/:id")
   .get(UsuariosController.verifyToken, MunicipiosController.getItem);
 
-// Fiscales Routes
+// Centros controller
 router
-  .route("/fiscales")
-  .get(UsuariosController.verifyToken, FiscalesController.getFromUser);
+  .route("/municipios/:id/centros")
+  .get(UsuariosController.verifyToken, CentrosController.getByMunicipio);
 
-// Partidos Routes
 router
-  .route("/partidos")
-  .get(UsuariosController.verifyToken, PartidosController.getList);
-
-// Recuentos Routes
-router
-  .route("/recuentos")
-  .put(UsuariosController.verifyToken, RecuentosController.updateRecuento);
+  .route("/centros/:id")
+  .get(UsuariosController.verifyToken, CentrosController.getItem);
 
 // Mesas routes
+router
+  .route("/centros/:id/mesas")
+  .get(UsuariosController.verifyToken, MesasController.getByCentro);
+
 router
   .route("/mesas/:id")
   .get(UsuariosController.verifyToken, MesasController.getItem);
 
 router
-  .route("/municipios/departamento/:id")
-  .get(UsuariosController.verifyToken, MunicipiosController.getByDepartamento);
+  .route("/mesas/:id/recuentos")
+  .put(UsuariosController.verifyToken, MesasController.updateRecuento);
 
+// Partidos Routes
 router
-  .route("/centros/municipio/:id")
-  .get(UsuariosController.verifyToken, CentrosController.getByMunicipio);
-
-router
-  .route("/mesas/centro/:id")
-  .get(UsuariosController.verifyToken, MesasController.getByCentro);
-
-// Centros controller
-router
-  .route("/centros/:id")
-  .get(UsuariosController.verifyToken, CentrosController.getItem);
-
-// Login route
-router.route("/login").post(UsuariosController.login);
+  .route("/partidos")
+  .get(UsuariosController.verifyToken, PartidosController.getList);
 
 module.exports = router;
