@@ -7,7 +7,7 @@
         <RecuentosummaryComponent :collection="centros" :partidos="partidos" child-route="centro" item-name="Centro" />
       </div>
     </div>
-    <div v-else class="text-purple m-3 text-center">
+    <div v-else class="text-purple dark:text-purple-300 m-3 text-center">
       No tiene fiscalías disponibles. <br />
         Por favor solicite que le sean asignadas para poder trabajar
     </div>

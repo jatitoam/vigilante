@@ -7,7 +7,7 @@
         <RecuentoSummaryComponent :collection="mesas" :partidos="partidos" child-route="" item-title="número" item-name="Mesa" />
       </div>
     </div>
-    <div v-else class="text-purple m-3 text-center">
+    <div v-else class="text-purple dark:text-purple-300 m-3 text-center">
       No tiene fiscalías disponibles. <br />
         Por favor solicite que le sean asignadas para poder trabajar
     </div>

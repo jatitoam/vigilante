@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="table-row-group">
-            <div class="table-row even:bg-green-100" v-for="item in collection" :key="item.uuid">
+            <div class="table-row even:bg-green-100 even:text-blue-900" v-for="item in collection" :key="item.uuid">
               <div class="table-cell">
                 <span class="cursor-pointer" @click="router.push(`/${childRoute}/${item.uuid}`)">{{ toWordUppercase(item[itemTitle]) }}</span>
               </div>
