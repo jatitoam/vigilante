@@ -22,25 +22,34 @@ export abstract class FiscaliasController extends BaseController {
       const fiscalias: Array<object> = usuario.fiscalias;
 
      await Promise.all(fiscalias.map(async (element: any) => {
-        const departamento = await DepartamentosModel.get(element.departamento_uuid);
-        const municipio = await MunicipiosModel.get(element.municipio_uuid);
-        const centro = await CentrosModel.get(element.centro_uuid);
-        const mesa = await MesasModel.get(element.mesa_uuid);
-        element.departamento = departamento.toJSON();
-        element.municipio = municipio.toJSON();
-        element.centro = centro.toJSON();
-        element.mesa = mesa.toJSON();
-        delete element.departamento_uuid;
-        delete element.municipio_uuid;
-        delete element.centro_uuid;
-        delete element.mesa_uuid;
+      const departamento = await DepartamentosModel.get(element.departamento_uuid);
+      element.departamento = departamento.toJSON();
+      delete element.departamento_uuid;
+  
+      if (element.municipio_uuid) {
+          const municipio = await MunicipiosModel.get(element.municipio_uuid);
+          element.municipio = municipio.toJSON();
+          delete element.municipio_uuid;
+      }
+  
+      if (element.centro_uuid) {
+          const centro = await CentrosModel.get(element.centro_uuid);
+          element.centro = centro.toJSON();
+          delete element.centro_uuid;
+      }
+  
+      if (element.mesa_uuid) {
+          const mesa = await MesasModel.get(element.mesa_uuid);
+          element.mesa = mesa.toJSON();
+          delete element.mesa_uuid;
+      }
      }));
 
     const transformedData = {
         departamentos: fiscalias.map((item: any) => item.departamento),
-        municipios: fiscalias.map((item: any) => item.municipio),
-        centros: fiscalias.map((item: any) => item.centro),
-        mesas: fiscalias.map((item: any) => item.mesa),
+        municipios: fiscalias.map((item: any) => item.municipio || null),
+        centros: fiscalias.map((item: any) => item.centro || null),
+        mesas: fiscalias.map((item: any) => item.mesa || null),
     };
 
     
