@@ -46,11 +46,7 @@ router.get("/health", function (req, res) {
 // Login route
 router.route("/login").post(UsuariosController.login);
 
-// Departamentos routes
-router
-  .route("/departamentos")
-  .get(UsuariosController.verifyToken, DepartamentosController.getList);
-
+// Departamento routes
 router
   .route("/departamentos/:id")
   .get(UsuariosController.verifyToken, DepartamentosController.getItem);
@@ -61,27 +57,15 @@ router
 
 // Municipio Routes
 router
-  .route("/departamentos/:id/municipios")
-  .get(UsuariosController.verifyToken, MunicipiosController.getByDepartamento);
-
-router
   .route("/municipios/:id")
   .get(UsuariosController.verifyToken, MunicipiosController.getItem);
 
 // Centros controller
 router
-  .route("/municipios/:id/centros")
-  .get(UsuariosController.verifyToken, CentrosController.getByMunicipio);
-
-router
   .route("/centros/:id")
   .get(UsuariosController.verifyToken, CentrosController.getItem);
 
 // Mesas routes
-router
-  .route("/centros/:id/mesas")
-  .get(UsuariosController.verifyToken, MesasController.getByCentro);
-
 router
   .route("/mesas/:id")
   .get(UsuariosController.verifyToken, MesasController.getItem);

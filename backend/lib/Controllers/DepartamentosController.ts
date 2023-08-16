@@ -11,19 +11,6 @@ export abstract class DepartamentosController extends BaseController {
   }
 
   /**
-   * Returns the public list of departments, for Express
-   *
-   * @param req
-   * @param res
-   */
-  public static async getList(req: Request, res: Response) {
-    const items = await DepartamentosModel.scan()
-      .attributes(["uuid", "nombre", "código", "recuentos"])
-      .exec();
-    res.status(200).json(items).end();
-  }
-
-  /**
    * Returns the department, for express
    *
    * @param req

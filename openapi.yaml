@@ -45,20 +45,6 @@ paths:
                   $ref: '#/components/schemas/Login'
         "403":
           description: Credenciales inválidas
-  /departamentos:
-    get:
-      summary: Despliega los departamentos disponibles
-      security:
-        - bearerAuth: []
-      responses:
-        "200":
-          description: Operación exitosa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Departamento'
   /departamentos/{departamento_uuid}:
     get:
       summary: Despliega el departamento especificado
@@ -97,29 +83,6 @@ paths:
           description: Operación exitosa
         "404":
           description: No se encontró el departamento
-  /departamentos/{departamento_uuid}/municipios:
-    get:
-      summary: Despliega los municipios de un departamento determinado
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: departamento_uuid
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Operación exitosa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Municipio'
-        "404":
-          description: No se encontró el departamento
   /municipios/{municipio_uuid}:
     get:
       summary: Despliega el municipio especificado
@@ -141,29 +104,6 @@ paths:
                 $ref: '#/components/schemas/Municipio'
         "404":
           description: No se encontró el municipio
-  /municipios/{municipio_uuid}/centros:
-    get:
-      summary: Despliega los centros de un municipio determinado
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: municipio_uuid
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Operación exitosa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Centro'
-        "404":
-          description: No se encontró el municipio
   /centros/{centro_uuid}:
     get:
       summary: Despliega el centro especificado
@@ -183,29 +123,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Centro'
-        "404":
-          description: No se encontró el centro
-  /centros/{centro_uuid}/mesas:
-    get:
-      summary: Despliega las mesas de un centro determinado
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: centro_uuid
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Operación exitosa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Mesa'
         "404":
           description: No se encontró el centro
   /mesas/{mesa_uuid}:

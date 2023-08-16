@@ -6,31 +6,11 @@ import { PartidosModel } from "../Models/PartidosModel";
 import { MunicipiosModel } from "../Models/MunicipiosModel";
 import { DepartamentosModel } from "../Models/DepartamentosModel";
 import { RecuentoPartido } from "../Types/RecuentoPartido";
-import { type } from "os";
-import { Municipios } from "../Types/Municipios";
-import { ModelType } from "dynamoose/dist/General";
 import { AnyItem } from "dynamoose/dist/Item";
 
 export abstract class MesasController extends BaseController {
   private constructor() {
     super();
-  }
-
-  /**
-   *
-   * @param req
-   * @param res
-   */
-  public static async getByCentro(req: Request, res: Response) {
-    const centro = await CentrosModel.get(req.params.id);
-    if (!centro) return res.status(404).end();
-
-    const items = await MesasModel.scan("centro_uuid")
-      .eq(req.params.id)
-      .attributes(["uuid", "número", "recuentos"])
-      .exec();
-
-    res.status(200).json(items).end();
   }
 
   /**
