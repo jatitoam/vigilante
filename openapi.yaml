@@ -276,6 +276,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Partido'
+  /fiscales:
+    get:
+      summary: Despliega los departamentos, municipios, centros y mesas asignadas a un fsical
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fiscal'
 components:
   securitySchemes:
     bearerAuth:
@@ -372,3 +386,22 @@ components:
           type: string
         color:
           type: string
+    Fiscal:
+      type: object
+      properties:
+        departamentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Departamento'
+        municipios:
+          type: array
+          items:
+            $ref: '#/components/schemas/Municipio'
+        centros:
+          type: array
+          items:
+            $ref: '#/components/schemas/Centro'
+        mesas:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mesa'

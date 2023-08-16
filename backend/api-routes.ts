@@ -6,6 +6,7 @@ import { UsuariosController } from "./lib/Controllers/UsuariosController";
 import { PartidosController } from "./lib/Controllers/PartidosController";
 import { MesasController } from "./lib/Controllers/MesasController";
 import { CentrosController } from "./lib/Controllers/CentrosController";
+import { FiscaliasController } from "./lib/Controllers/FiscaliasController";
 
 const router: Router = Router();
 
@@ -93,5 +94,10 @@ router
 router
   .route("/partidos")
   .get(UsuariosController.verifyToken, PartidosController.getList);
+
+// Fiscalias
+router
+  .route("/fiscalias")
+  .get(UsuariosController.verifyToken, FiscaliasController.getByUsuario);
 
 module.exports = router;

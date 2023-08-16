@@ -1,3 +1,5 @@
+import { fiscaliasSchema } from "./FiscaliasSchema";
+
 export function usuariosSchema() {
   return {
     uuid: { type: String, required: true },
@@ -8,5 +10,9 @@ export function usuariosSchema() {
     contraseña: { type: String, required: true },
     admin: { type: Boolean, required: true },
     supervisor: { type: Boolean, required: true },
+    fiscalias: {
+      type: Array,
+      schema: [{ type: Object, schema: fiscaliasSchema() }],
+    },
   };
 }
