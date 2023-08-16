@@ -21,6 +21,30 @@ export abstract class FiscaliasController extends BaseController {
       const usuario: any = await UsuariosModel.get(key);
       const fiscalias: Array<object> = usuario.fiscalias;
 
+      if (usuario.admin || usuario.supervisor) {
+        const departamentos = await DepartamentosModel.scan()
+        .attributes(["uuid", "nombre", "recuentos"])
+        .exec();
+        const municipios = await MunicipiosModel.scan()
+        .attributes(["uuid", "nombre", "recuentos"])
+        .exec();
+        const centros = await CentrosModel.scan()
+        .attributes(["uuid", "nombre", "recuentos"])
+        .exec();
+        const mesas = await MesasModel.scan()
+        .attributes(["uuid", "nombre", "recuentos"])
+        .exec();
+
+        const transformedData = {
+          departamentos: departamentos,
+          municipios: municipios,
+          centros: centros,
+          mesas: mesas,
+        };
+
+        res.status(200).json(transformedData).end();
+      }
+
      await Promise.all(fiscalias.map(async (element: any) => {
       const departamento = await DepartamentosModel.get(element.departamento_uuid);
       element.departamento = departamento.toJSON();
@@ -51,7 +75,6 @@ export abstract class FiscaliasController extends BaseController {
         centros: fiscalias.map((item: any) => item.centro || null),
         mesas: fiscalias.map((item: any) => item.mesa || null),
     };
-
     
     res.status(200).json(transformedData).end();
   }
