@@ -9,22 +9,6 @@ export abstract class MunicipiosController extends BaseController {
   }
 
   /**
-   *
-   * @param req
-   * @param res
-   */
-  public static async getByDepartamento(req: Request, res: Response) {
-    const departamento = await DepartamentosModel.get(req.params.id);
-    if (!departamento) return res.status(404).end();
-
-    const items = await MunicipiosModel.scan("departamento_uuid")
-      .eq(req.params.id)
-      .attributes(["uuid", "nombre", "código", "recuentos"])
-      .exec();
-    res.status(200).json(items).end();
-  }
-
-  /**
    * Returns the Municipios, for express
    *
    * @param req
